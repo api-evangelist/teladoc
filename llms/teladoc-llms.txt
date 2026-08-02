@@ -1,0 +1,28 @@
+# Teladoc Health
+
+> Teladoc Health is a global virtual-care company (telehealth, behavioral health, chronic-condition management and expert medical opinion). Its developer surface is the Solo platform: a partner-gated REST API (the Solo External API, served under /qapi/v1 on visitnow.org) plus native iOS/Android Mobile SDKs for embedding virtual care into partner apps. Access is granted under a partner agreement and Business Associate Agreement (BAA); authentication is a static Api-Key header.
+
+## APIs
+- [Solo External API](https://intouchhealth.github.io/solo-slate/): REST API for patients, appointments, waiting rooms, visit notes, appointment slots, attachments, episodes of care, encounter reports, integrations (Perfect Answer), virtual nursing, and webhooks. Base host: demo.visitnow.org (demo). Auth: Api-Key header.
+
+## Docs
+- [Developer Hub](https://api-documentation.teladochealth.com/): Teladoc Health developer documentation portal (partner access).
+- [Solo External API Reference](https://intouchhealth.github.io/solo-slate/): full operation reference.
+
+## Events
+- [Webhooks](asyncapi/teladoc-webhooks.yml): 13 event types across patient, appointment, episode and intake lifecycles; payloads AES-256-CBC encrypted. Register at POST /qapi/v1/webhooks.
+
+## Artifacts
+- [Authentication](authentication/teladoc-authentication.yml): Api-Key header profile.
+- [Conventions](conventions/teladoc-conventions.yml): versioning, identifiers, error envelope, context-aware linking.
+- [Error catalog](errors/teladoc-problem-types.yml): JSON message envelope + status codes.
+- [Data model](data-model/teladoc-data-model.yml): entity/relationship graph.
+- [Lifecycle](lifecycle/teladoc-lifecycle.yml): versioning posture.
+- [Conformance](conformance/teladoc-conformance.yml): HIPAA / standards assertions.
+- [Packages / SDKs](packages/teladoc-packages.yml): iOS and Android Mobile SDKs.
+- [MCP (candidate)](mcp/teladoc-mcp.yml): derived candidate tool list.
+- [Domain security](security/teladoc-domain-security.yml): TLS/DNS posture.
+
+## Company
+- [Website](https://www.teladochealth.com)
+- [GitHub (IntouchHealth)](https://github.com/IntouchHealth)

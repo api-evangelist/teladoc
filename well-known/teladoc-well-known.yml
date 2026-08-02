@@ -1,0 +1,27 @@
+generated: '2026-07-21'
+method: probed
+source: live probes of teladoc.com / teladochealth.com / demo.visitnow.org
+notes: >-
+  No real /.well-known/ discovery documents are published. teladoc.com and
+  teladochealth.com return HTTP 200 for every /.well-known/ path but serve the
+  site's generic "Page Not Found" HTML (soft 404, meta robots noindex), not a
+  discovery document. demo.visitnow.org returns a genuine 404. No security.txt,
+  openid-configuration, oauth-authorization-server, api-catalog, or ai-plugin.json
+  exists.
+hosts:
+- host: https://www.teladochealth.com
+  documents:
+  - path: /.well-known/security.txt
+    status: soft-404
+  - path: /.well-known/openid-configuration
+    status: soft-404
+  - path: /.well-known/oauth-authorization-server
+    status: soft-404
+  - path: /.well-known/api-catalog
+    status: soft-404
+  - path: /.well-known/ai-plugin.json
+    status: soft-404
+- host: https://demo.visitnow.org
+  documents:
+  - path: /.well-known/security.txt
+    status: 404

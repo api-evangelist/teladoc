@@ -1,0 +1,33 @@
+generated: '2026-07-21'
+method: searched
+source: https://intouchhealth.github.io/solo-slate/
+api: Teladoc Health Solo External API
+format: json-message-envelope
+envelope:
+  shape: json-object
+  fields:
+  - name: message
+    description: Human-readable description of the error condition.
+  example: '{"message": "Missing Required Parameters"}'
+notes: >-
+  The Solo External API does not use RFC 9457 application/problem+json. Errors
+  are returned as a plain JSON object carrying a human-readable message field,
+  with the failure signalled by the HTTP status code.
+problems:
+- status: 400
+  title: Bad Request
+  meaning: Missing or malformed required parameters in the request.
+  example_message: Missing Required Parameters
+- status: 403
+  title: Forbidden
+  meaning: Authentication missing/invalid or the API key lacks access to the resource.
+- status: 404
+  title: Not Found
+  meaning: The addressed resource (patient, appointment, device, report) does not exist.
+  example_message: Device could not be found
+- status: 422
+  title: Unprocessable Entity
+  meaning: The request was well-formed but failed validation of its contents.
+success_codes:
+- 200
+- 201

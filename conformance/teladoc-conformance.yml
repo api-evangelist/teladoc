@@ -1,0 +1,25 @@
+generated: '2026-07-21'
+method: derived
+source: https://intouchhealth.github.io/solo-slate/
+api: Teladoc Health Solo External API
+standards:
+- id: hipaa
+  conforms: true
+  evidence: >-
+    Healthcare API handling PHI; documentation requires a Business Associate
+    Agreement (BAA) and AES-256-CBC encryption for webhook payloads and
+    context-aware links.
+- id: oauth2
+  conforms: false
+  evidence: Authentication is a static Api-Key header, not OAuth2.
+- id: oidc
+  conforms: false
+- id: fhir
+  conforms: false
+  evidence: Custom /qapi/v1 resource model, not FHIR resources.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: 'Errors use a plain {"message": ...} JSON envelope, not application/problem+json.'
+- id: webhooks
+  conforms: true
+  evidence: Event subscription surface at /qapi/v1/webhooks with 13 event types.

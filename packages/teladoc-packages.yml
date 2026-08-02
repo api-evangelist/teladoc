@@ -1,0 +1,27 @@
+generated: '2026-07-21'
+method: derived
+source: https://api-documentation.teladochealth.com/ (Developer Hub); https://intouchhealth.github.io/solo-slate/
+api: Teladoc Health Solo
+notes: >-
+  Teladoc Health publishes first-party Mobile SDKs (iOS and Android) that embed
+  the full Solo virtual-care experience (general medical, behavioral health,
+  expert opinion) natively into partner apps. Distribution is partner-gated:
+  the SDK binaries and their documentation are provided on request under a
+  partner/BAA agreement, not via public package registries (npm, Maven Central,
+  CocoaPods, etc.). No first-party server-side client library was found on a
+  public registry.
+packages:
+- name: Teladoc Health Mobile SDK (iOS)
+  language: swift
+  platform: ios
+  registry: null
+  access: request-access
+  url: https://api-documentation.teladochealth.com/
+  official: true
+- name: Teladoc Health Mobile SDK (Android)
+  language: kotlin
+  platform: android
+  registry: null
+  access: request-access
+  url: https://api-documentation.teladochealth.com/
+  official: true

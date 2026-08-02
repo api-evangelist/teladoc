@@ -1,0 +1,17 @@
+generated: '2026-07-21'
+method: searched
+source: https://intouchhealth.github.io/solo-slate/
+api: Teladoc Health Solo External API
+environments:
+- name: demo
+  base_url: https://demo.visitnow.org
+  purpose: >-
+    Published demo/test environment used throughout the Solo External API
+    reference. Video call links are issued under https://demo.visitnow.org/videocalls/.
+  auth: Api-Key header (demo tenant key issued by Teladoc Health)
+test_values:
+  documented: false
+  notes: >-
+    The Solo External API is a HIPAA-regulated healthcare API; it does not
+    publish shared magic test identifiers or synthetic patient records. Partners
+    are provisioned a demo tenant on demo.visitnow.org with their own credentials.

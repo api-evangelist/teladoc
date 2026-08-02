@@ -1,8 +1,28 @@
 aid: teladoc
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/teladoc.png
 name: Teladoc
-description: 'Teladoc is a company surfaced as a portfolio company of bond-capital and added to the API
-  Evangelist network as a stub for enrichment. Sector: healthtech. This profile is a lead awaiting the
-  enrichment pipeline.'
+description: >-
+  Teladoc Health is a global virtual-care company providing telehealth, mental
+  and behavioral health, chronic-condition management, and expert medical
+  opinion services. Its developer surface is the Solo platform: a partner-gated
+  REST API (the Solo External API, served under /qapi/v1 on visitnow.org) for
+  patients, appointments, waiting rooms, visit notes, episodes of care,
+  encounter reports, virtual nursing, and webhooks, plus native iOS and Android
+  Mobile SDKs for embedding virtual care into partner applications. Access is
+  granted under a partner agreement and Business Associate Agreement (BAA);
+  requests authenticate with a static Api-Key header. Sector: healthtech.
 url: https://raw.githubusercontent.com/api-evangelist/teladoc/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -12,11 +32,41 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
 tags:
 - Company
 - Healthtech
-apis: []
+- Telehealth
+- Telemedicine
+- Virtual Care
+- Healthcare
+- Behavioral Health
+- Webhooks
+- API
+apis:
+- name: Teladoc Health Solo External API
+  description: >-
+    REST API for the Teladoc Health Solo virtual-care platform. Manages
+    patients, appointments, waiting rooms, appointment slots, visit notes,
+    attachments, patient documents, episodes of care, encounter reports,
+    integrations (Perfect Answer), virtual nursing/sitting requests, and
+    webhooks. All resources are served under the /qapi/v1 path and authenticate
+    with an Api-Key request header.
+  humanURL: https://intouchhealth.github.io/solo-slate/
+  baseURL: https://demo.visitnow.org
+  tags:
+  - Telehealth
+  - Virtual Care
+  - Healthcare
+  properties:
+  - type: Documentation
+    url: https://intouchhealth.github.io/solo-slate/
+  - type: APIReference
+    url: https://intouchhealth.github.io/solo-slate/
+  - type: Authentication
+    url: authentication/teladoc-authentication.yml
+  - type: Webhooks
+    url: asyncapi/teladoc-webhooks.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -24,4 +74,43 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://teladoc.com
+  url: https://www.teladochealth.com
+- type: DeveloperPortal
+  url: https://api-documentation.teladochealth.com/
+- type: Documentation
+  url: https://intouchhealth.github.io/solo-slate/
+- type: APIReference
+  url: https://intouchhealth.github.io/solo-slate/
+- type: GitHubOrganization
+  url: https://github.com/IntouchHealth
+- type: Authentication
+  url: authentication/teladoc-authentication.yml
+- type: Conventions
+  url: conventions/teladoc-conventions.yml
+- type: ErrorCatalog
+  url: errors/teladoc-problem-types.yml
+- type: Webhooks
+  url: asyncapi/teladoc-webhooks.yml
+- type: Sandbox
+  url: sandbox/teladoc-sandbox.yml
+- type: Lifecycle
+  url: lifecycle/teladoc-lifecycle.yml
+- type: DataModel
+  url: data-model/teladoc-data-model.yml
+- type: Conformance
+  url: conformance/teladoc-conformance.yml
+- type: Packages
+  url: packages/teladoc-packages.yml
+- type: SDKs
+  url: packages/teladoc-packages.yml
+- type: MCPServer
+  url: mcp/teladoc-mcp.yml
+- type: DomainSecurity
+  url: security/teladoc-domain-security.yml
+- type: LLMsTxt
+  url: llms/teladoc-llms.txt
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 13
+  pass: local-v1

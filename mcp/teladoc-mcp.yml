@@ -1,0 +1,61 @@
+generated: '2026-07-21'
+method: derived
+status: candidate
+source: https://intouchhealth.github.io/solo-slate/
+notes: >-
+  No official hosted/remote MCP server is published by Teladoc Health. This is a
+  CANDIDATE tool list derived from the documented Solo External API operations,
+  as a starting point for an MCP wrapper. Tools would authenticate with the
+  Api-Key header and operate against a partner tenant on visitnow.org.
+server:
+  name: teladoc-solo
+  transport: http
+tools:
+- name: list_waiting_rooms
+  description: List the practice's waiting rooms.
+  source_operation: GET /qapi/v1/waiting-rooms
+- name: create_patient
+  description: Create a patient record.
+  source_operation: POST /qapi/v1/patients
+- name: get_patient
+  description: Retrieve a patient by id (patient_id, SPID or HSID).
+  source_operation: GET /qapi/v1/patients/{patient_id}
+- name: update_patient
+  description: Update a patient's demographics.
+  source_operation: PUT /qapi/v1/patients/{patient_id}
+- name: list_patient_appointments
+  description: List appointments for a patient.
+  source_operation: GET /qapi/v1/patients/{patient_id}/appointments
+- name: create_appointment
+  description: Schedule an appointment for a patient.
+  source_operation: POST /qapi/v1/patients/{patient_id}/appointments
+- name: get_appointment
+  description: Retrieve a single appointment.
+  source_operation: GET /qapi/v1/appointments/{appointment_id}
+- name: get_appointment_video_links
+  description: Get provider/patient video call links for an appointment.
+  source_operation: GET /qapi/v1/appointments/{external_appointment_id}/video-call-links
+- name: list_appointment_slots
+  description: Query available appointment slots by date range and duration.
+  source_operation: GET /qapi/v1/appointment-slots
+- name: get_visit_note
+  description: Retrieve an appointment's visit note.
+  source_operation: GET /qapi/v1/appointments/{appointment_id}/visit-note
+- name: upload_appointment_attachment
+  description: Upload a file attachment to an appointment.
+  source_operation: POST /qapi/v1/appointments/{appointmentId}/attachments
+- name: create_episode
+  description: Create an episode of care for a patient.
+  source_operation: POST /qapi/v1/patients/{patient_id}/episodes
+- name: list_episode_appointments
+  description: List appointments in an episode of care.
+  source_operation: GET /qapi/v1/episodes/{episode_id}/appointments
+- name: create_encounter_report
+  description: Generate an encounter/visits report.
+  source_operation: POST /qapi/v1/encounter-report/create
+- name: register_webhook
+  description: Register a webhook subscription for patient/appointment/episode events.
+  source_operation: POST /qapi/v1/webhooks
+- name: request_assistance
+  description: Create a virtual nursing/sitting assistance request.
+  source_operation: POST /qapi/v1/request-assistance

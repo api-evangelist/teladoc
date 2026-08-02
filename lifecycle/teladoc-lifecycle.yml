@@ -1,0 +1,22 @@
+generated: '2026-07-21'
+method: derived
+source: https://intouchhealth.github.io/solo-slate/
+api: Teladoc Health Solo External API
+versioning:
+  scheme: uri-path
+  current: v1
+  path_prefix: /qapi/v1
+  docs: https://intouchhealth.github.io/solo-slate/
+deprecation:
+  policy_url: null
+  sunset_header: false
+  notes: No public deprecation/sunset policy is documented for the Solo External API.
+sla:
+  url: null
+status_page: null
+deprecated_operations: []
+notes: >-
+  No public status page, changelog, or deprecation policy was found for the Solo
+  External API. Access is partner-gated (BAA required), so lifecycle
+  communications are handled through the partner relationship rather than a
+  public surface.

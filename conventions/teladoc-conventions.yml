@@ -1,0 +1,65 @@
+generated: '2026-07-21'
+method: searched
+source: https://intouchhealth.github.io/solo-slate/
+api: Teladoc Health Solo External API
+authentication:
+  style: api-key-header
+  header: Api-Key
+  see: authentication/teladoc-authentication.yml
+versioning:
+  scheme: uri-path
+  current: v1
+  path_prefix: /qapi/v1
+  notes: All resources are served under the /qapi/v1 path prefix.
+content_types:
+  request: application/json
+  response: application/json
+  binary:
+  - application/pdf   # appointment attachments
+  - application/octet-stream   # encounter report downloads
+identifiers:
+  notes: >-
+    Resources are addressable by multiple identifier types. Patients accept an
+    internal patient_id, an SPID (Solo Patient ID) and an HSID; appointments
+    accept an internal id and a SAID (Solo Appointment ID) via the
+    /id/type/{type}/value/{value} addressing convention.
+  patient_id_types:
+  - patient_id
+  - SPID
+  - HSID
+  appointment_id_types:
+  - appointment_id
+  - SAID
+  - external_appointment_id
+error_envelope:
+  shape: json-object
+  fields:
+  - message
+  see: errors/teladoc-problem-types.yml
+  example: '{"message": "Missing Required Parameters"}'
+webhooks:
+  supported: true
+  see: asyncapi/teladoc-webhooks.yml
+context_aware_linking:
+  supported: true
+  scheme: >-
+    Encrypted deep links pass an AES-256-CBC encrypted JSON payload as a query
+    parameter; the key is derived as a sha256 hash from a salted shared secret.
+idempotency:
+  documented: false
+  notes: The Solo External API does not document an idempotency-key mechanism.
+pagination:
+  documented: false
+  notes: >-
+    Collection endpoints exist (patients, appointments, appointment-slots,
+    episodes, webhooks) but the docs do not publish an explicit cursor/offset
+    pagination contract; slot/appointment queries are bounded by after/before
+    date-range filters instead.
+rate_limiting:
+  documented: false
+cross_links:
+  authentication: authentication/teladoc-authentication.yml
+  errors: errors/teladoc-problem-types.yml
+  webhooks: asyncapi/teladoc-webhooks.yml
+  lifecycle: lifecycle/teladoc-lifecycle.yml
+  data_model: data-model/teladoc-data-model.yml

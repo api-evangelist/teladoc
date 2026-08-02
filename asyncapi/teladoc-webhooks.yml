@@ -1,0 +1,46 @@
+generated: '2026-07-21'
+method: searched
+source: https://intouchhealth.github.io/solo-slate/
+spec_type: Webhooks
+api: Teladoc Health Solo External API
+registration:
+  endpoint: POST /qapi/v1/webhooks
+  manage:
+  - GET /qapi/v1/webhooks
+  - GET /qapi/v1/webhooks/{webhookId}
+  - DELETE /qapi/v1/webhooks/{webhookId}
+  model: >-
+    Subscribers register a callback URL and select event types. On creation the
+    API returns an encryption key used to decrypt delivered payloads.
+security:
+  payload_encryption: >-
+    Webhook payloads are encrypted with AES-256-CBC; the key is derived as a
+    sha256 hash from a salted secret supplied at webhook creation time.
+events:
+- name: patient:created
+  category: patient
+- name: patient:updated
+  category: patient
+- name: patient:deactivated
+  category: patient
+- name: appointment:scheduled
+  category: appointment
+- name: appointment:rescheduled
+  category: appointment
+- name: appointment:cancelled
+  category: appointment
+- name: appointment:completed
+  category: appointment
+- name: appointment:incompleted
+  category: appointment
+- name: appointment:no-show
+  category: appointment
+- name: appointment:lwbs
+  category: appointment
+  note: left without being seen
+- name: episode:created
+  category: episode
+- name: episode:updated
+  category: episode
+- name: intake:completed
+  category: intake

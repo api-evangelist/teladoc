@@ -1,0 +1,74 @@
+generated: '2026-07-21'
+method: derived
+source: https://intouchhealth.github.io/solo-slate/
+api: Teladoc Health Solo External API
+notes: >-
+  Entity graph derived from the resource nesting in the Solo External API URL
+  structure (/qapi/v1). No OpenAPI is published, so relationships are inferred
+  from documented path hierarchy and identifier fields.
+entities:
+- name: Patient
+  path: /qapi/v1/patients/{patient_id}
+  identifiers:
+  - patient_id
+  - SPID
+  - HSID
+- name: Appointment
+  path: /qapi/v1/appointments/{appointment_id}
+  identifiers:
+  - appointment_id
+  - SAID
+  - external_appointment_id
+- name: WaitingRoom
+  path: /qapi/v1/waiting-rooms
+- name: AppointmentSlot
+  path: /qapi/v1/appointment-slots
+- name: VisitNote
+  path: /qapi/v1/appointments/{appointment_id}/visit-note
+- name: AppointmentAttachment
+  path: /qapi/v1/appointments/{appointmentId}/attachments/{attachmentId}
+- name: PatientDocument
+  path: /qapi/v1/patients/{patient_id}/documents
+- name: Episode
+  path: /qapi/v1/episodes/{episode_id}
+- name: EncounterReport
+  path: /qapi/v1/encounter-report/{reportId}
+- name: Webhook
+  path: /qapi/v1/webhooks/{webhookId}
+relationships:
+- from: Appointment
+  type: belongs_to
+  to: Patient
+  via: patient_id
+- from: Appointment
+  type: belongs_to
+  to: Episode
+  via: episode (assign)
+- from: Appointment
+  type: has_one
+  to: VisitNote
+  via: appointment_id
+- from: Appointment
+  type: has_many
+  to: AppointmentAttachment
+  via: appointmentId
+- from: AppointmentSlot
+  type: belongs_to
+  to: WaitingRoom
+  via: waitingRoom
+- from: Patient
+  type: has_many
+  to: Appointment
+  via: patient_id
+- from: Patient
+  type: has_many
+  to: Episode
+  via: patient_id
+- from: Patient
+  type: has_many
+  to: PatientDocument
+  via: patient_id
+- from: Episode
+  type: has_many
+  to: Appointment
+  via: episode_id

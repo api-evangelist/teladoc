@@ -1,0 +1,25 @@
+generated: '2026-07-21'
+method: searched
+source: https://intouchhealth.github.io/solo-slate/
+docs: https://intouchhealth.github.io/solo-slate/
+api: Teladoc Health Solo External API
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+  oauth2_flows: []
+  notes: >-
+    The Solo External API authenticates every request with a static API key
+    passed in the Api-Key request header. Keys are issued per practice/tenant by
+    Teladoc Health. Access to the API and SDK documentation is granted on request
+    (partners email Teladoc Health). No OAuth2/OIDC surface is documented; the API
+    is machine-to-machine with a Business Associate Agreement (BAA) required for
+    handling PHI.
+schemes:
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter_name: Api-Key
+  sources:
+  - https://intouchhealth.github.io/solo-slate/
