@@ -32,7 +32,7 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-21'
+modified: '2026-08-15'
 tags:
 - Company
 - Healthtech
@@ -67,6 +67,16 @@ apis:
     url: authentication/teladoc-authentication.yml
   - type: Webhooks
     url: asyncapi/teladoc-webhooks.yml
+  - type: Conventions
+    url: conventions/teladoc-conventions.yml
+  - type: ErrorCatalog
+    url: errors/teladoc-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/teladoc-rate-limits.yml
+  - type: ChangeLog
+    url: changelog/teladoc-changelog.yml
+  - type: Sandbox
+    url: sandbox/teladoc-sandbox.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -103,14 +113,36 @@ common:
   url: packages/teladoc-packages.yml
 - type: SDKs
   url: packages/teladoc-packages.yml
-- type: MCPServer
-  url: mcp/teladoc-mcp.yml
 - type: DomainSecurity
   url: security/teladoc-domain-security.yml
 - type: LLMsTxt
   url: llms/teladoc-llms.txt
+- type: VulnerabilityDisclosure
+  url: security/teladoc-vulnerability-disclosure.yml
+- type: Security
+  url: security/teladoc-vulnerability-disclosure.yml
+- type: Compliance
+  url: conformance/teladoc-conformance.yml
+- type: ChangeLog
+  url: changelog/teladoc-changelog.yml
+- type: Plans
+  url: plans/teladoc-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/teladoc-rate-limits.yml
+- type: Support
+  url: https://www.teladochealth.com/helpcenter
+- type: Blog
+  url: https://www.teladochealth.com/library
+- type: TermsOfService
+  url: https://www.teladochealth.com/legal/terms-of-service
+- type: PrivacyPolicy
+  url: https://www.teladochealth.com/legal/privacy-policy
+- type: SignUp
+  url: https://member.teladoc.com/registration
+- type: Login
+  url: https://member.teladoc.com/signin
 x-enrichment:
-  date: '2026-07-21'
+  date: '2026-08-15'
   status: enriched
-  artifacts_added: 13
+  artifacts_added: 4
   pass: local-v1
