@@ -2,11 +2,9 @@ generated: '2026-07-21'
 method: derived
 status: candidate
 source: https://intouchhealth.github.io/solo-slate/
-notes: >-
-  No official hosted/remote MCP server is published by Teladoc Health. This is a
-  CANDIDATE tool list derived from the documented Solo External API operations,
-  as a starting point for an MCP wrapper. Tools would authenticate with the
-  Api-Key header and operate against a partner tenant on visitnow.org.
+notes: No official hosted/remote MCP server is published by Teladoc Health. This is a CANDIDATE tool list
+  derived from the documented Solo External API operations, as a starting point for an MCP wrapper. Tools
+  would authenticate with the Api-Key header and operate against a partner tenant on visitnow.org.
 server:
   name: teladoc-solo
   transport: http
@@ -59,3 +57,49 @@ tools:
 - name: request_assistance
   description: Create a virtual nursing/sitting assistance request.
   source_operation: POST /qapi/v1/request-assistance
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: api-key
+  verified: derived
+  tools: 16
+  checked: '2026-08-15'
+  source: catalog MCP census + registry/docs search 2026-08-15
+  notes: >-
+    Teladoc Health ships no MCP server of any kind — no hosted endpoint and no
+    stdio package. The tools above are a CANDIDATE list derived from documented
+    Solo External API operations; no endpoint URL is asserted because none
+    exists. auth records what a wrapper would need (the Api-Key header), not a
+    live server.
+third_party:
+- name: '@striderlabs/mcp-teladoc'
+  official: false
+  registry: npm
+  url: https://www.npmjs.com/package/@striderlabs/mcp-teladoc
+  repository: https://github.com/markswendsen-code/mcp-teladoc
+  version: 1.0.1
+  published: '2026-06-18'
+  mode: local-stdio
+  install: npx @striderlabs/mcp-teladoc
+  auth: >-
+    TELADOC_EMAIL / TELADOC_PASSWORD environment variables — a member's consumer
+    login, not an API credential.
+  method: >-
+    Browser automation against the consumer member site, per its own README, not
+    a client of the Solo External API.
+  tools:
+  - search_providers
+  - get_provider_details
+  - list_appointments
+  - book_appointment
+  - cancel_appointment
+  - get_prescriptions
+  - send_message
+  - get_visit_history
+  caution: >-
+    Unaffiliated with Teladoc Health. It drives a logged-in patient session with
+    a scraped browser and touches PHI and prescriptions; it is recorded here as
+    an observed fact about the ecosystem, NOT as a Teladoc Health agent surface,
+    and it earns the provider no MCP credit.

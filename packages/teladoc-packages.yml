@@ -1,27 +1,86 @@
-generated: '2026-07-21'
-method: derived
-source: https://api-documentation.teladochealth.com/ (Developer Hub); https://intouchhealth.github.io/solo-slate/
+generated: '2026-08-15'
+method: searched
+source: >-
+  registry sweeps of npm, PyPI, Maven Central, NuGet, RubyGems and CocoaPods
+  (2026-08-15) + https://intouchhealth.github.io/solo-slate/ +
+  https://api-documentation.teladochealth.com/ (Developer Hub, currently down)
 api: Teladoc Health Solo
 notes: >-
   Teladoc Health publishes first-party Mobile SDKs (iOS and Android) that embed
-  the full Solo virtual-care experience (general medical, behavioral health,
-  expert opinion) natively into partner apps. Distribution is partner-gated:
-  the SDK binaries and their documentation are provided on request under a
-  partner/BAA agreement, not via public package registries (npm, Maven Central,
-  CocoaPods, etc.). No first-party server-side client library was found on a
-  public registry.
+  the Solo virtual-care experience natively into partner apps. Distribution is
+  partner-gated: the binaries and their documentation are handed over under a
+  partner/BAA agreement, not published to any public package registry. No
+  first-party server-side client library exists for the Solo External API — every
+  public registry sweep returned zero first-party results — so integrators hand-roll
+  HTTP against /qapi/v1. Because nothing is published, there is no version or
+  release date any consumer (or this pipeline) can read: the currency fields below
+  are null by fact, not for want of checking.
+registry_sweep:
+  checked: '2026-08-15'
+  results:
+  - registry: npm
+    query: teladoc / intouch health
+    first_party_hits: 0
+    note: >-
+      One third-party hit, @striderlabs/mcp-teladoc 1.0.1 (2026-06-18), an
+      unaffiliated browser-automation MCP connector — recorded in
+      mcp/teladoc-mcp.yml under third_party, not as a Teladoc package.
+  - registry: pypi
+    query: teladoc
+    first_party_hits: 0
+    note: 'https://pypi.org/pypi/teladoc/json returned 404.'
+  - registry: maven-central
+    query: teladoc
+    first_party_hits: 0
+    note: search.maven.org numFound 0.
+  - registry: nuget
+    query: teladoc
+    first_party_hits: 0
+  - registry: rubygems
+    query: teladoc
+    first_party_hits: 0
+  - registry: cocoapods
+    query: TeladocHealth / TeladocHealthSDK / TDHSolo / InTouchHealth
+    first_party_hits: 0
+    note: All pod lookups returned 404 on trunk.cocoapods.org.
 packages:
 - name: Teladoc Health Mobile SDK (iOS)
   language: swift
   platform: ios
   registry: null
+  distribution: partner-gated binary (request access)
   access: request-access
+  version: null
+  published: null
+  currency_note: >-
+    Checked CocoaPods and Swift Package Index; the SDK is not published to any
+    registry, so no version string or release date is discoverable. A partner
+    cannot tell from any public source which build they are being given.
   url: https://api-documentation.teladochealth.com/
+  url_status: 403
   official: true
 - name: Teladoc Health Mobile SDK (Android)
   language: kotlin
   platform: android
   registry: null
+  distribution: partner-gated binary (request access)
   access: request-access
+  version: null
+  published: null
+  currency_note: >-
+    Checked Maven Central; the SDK is not published to any registry, so no
+    version string or release date is discoverable.
   url: https://api-documentation.teladochealth.com/
+  url_status: 403
   official: true
+evidence:
+- url: https://api-documentation.teladochealth.com/
+  status: 403
+  note: >-
+    The Developer Hub that distributes the SDK docs is returning Cloudflare
+    "error code: 1014" (CNAME cross-user banned) — the host is misconfigured, not
+    merely gated. This is the provider's own SDK documentation front door.
+- url: https://registry.npmjs.org/-/v1/search?text=teladoc
+  status: 200
+- url: https://pypi.org/pypi/teladoc/json
+  status: 404

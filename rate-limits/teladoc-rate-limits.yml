@@ -1,0 +1,31 @@
+generated: '2026-08-15'
+method: probed
+source: https://intouchhealth.github.io/solo-slate/ + live response headers from https://demo.visitnow.org/qapi/v1/waiting-rooms
+api: Teladoc Health Solo External API
+limit_count: 0
+limits: []
+headers:
+  published: []
+  observed: []
+  notes: >-
+    An unauthenticated request to GET https://demo.visitnow.org/qapi/v1/waiting-rooms
+    returned HTTP 401 with headers: date, content-type: application/json,
+    cache-control: no-cache, private, x-correlation-id, strict-transport-security,
+    cf-cache-status, x-content-type-options, server: cloudflare, cf-ray. No
+    X-RateLimit-*, RateLimit-* or Retry-After header was present on the response.
+exhaustion_status: null
+notes: >-
+  Teladoc Health documents no rate limits, quotas, burst allowances or throttling
+  behaviour for the Solo External API. The Slate reference contains no mention of
+  rate limiting, throttling or 429 responses, and the live edge (Cloudflare in
+  front of visitnow.org) advertises no rate-limit headers on an unauthenticated
+  request. An integrator therefore has no published runtime signal for pacing;
+  limits, if enforced, are enforced silently or set per-tenant under the partner
+  agreement. An honest zero, not an unchecked field.
+evidence:
+- url: https://demo.visitnow.org/qapi/v1/waiting-rooms
+  status: 401
+  note: No rate-limit headers on the response; x-correlation-id is the only tracing header.
+- url: https://intouchhealth.github.io/solo-slate/
+  status: 200
+  note: No rate limit / throttling / 429 documentation anywhere in the reference.

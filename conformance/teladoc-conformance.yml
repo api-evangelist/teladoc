@@ -1,25 +1,79 @@
-generated: '2026-07-21'
-method: derived
-source: https://intouchhealth.github.io/solo-slate/
+generated: '2026-08-15'
+method: searched
+source: >-
+  https://intouchhealth.github.io/solo-slate/ +
+  https://www.teladochealth.com/legal/notice-of-privacy-practices +
+  https://www.teladochealth.com/legal/responsible-disclosure
 api: Teladoc Health Solo External API
 standards:
 - id: hipaa
   conforms: true
   evidence: >-
-    Healthcare API handling PHI; documentation requires a Business Associate
-    Agreement (BAA) and AES-256-CBC encryption for webhook payloads and
-    context-aware links.
+    Teladoc Health publishes a HIPAA Notice of Privacy Practices
+    (https://www.teladochealth.com/legal/notice-of-privacy-practices, HTTP 200)
+    and a Consumer Health Data Privacy Policy, and its privacy policy states that
+    information in secure Teladoc Health sites is PHI covered by HIPAA. The Solo
+    External API handles PHI and is granted under a Business Associate Agreement
+    (BAA); webhook payloads and context-aware links are AES-256-CBC encrypted.
+- id: hitrust-csf
+  conforms: unverified
+  evidence: >-
+    Teladoc Health and InTouch Health each announced HITRUST CSF certification in
+    press releases (2017 and later), but both first-party URLs now 301 to an
+    empty /newsroom and ir.teladochealth.com returns 403, so no live first-party
+    page states a current certification. No trust centre exists at
+    trust.teladochealth.com (no DNS). Recorded as unverified rather than true —
+    a historical announcement is not a current published certification.
 - id: oauth2
   conforms: false
   evidence: Authentication is a static Api-Key header, not OAuth2.
 - id: oidc
   conforms: false
+  evidence: >-
+    No openid-configuration is served on any host; /.well-known/openid-configuration
+    on demo.visitnow.org returns the SPA shell, not a discovery document.
 - id: fhir
-  conforms: false
-  evidence: Custom /qapi/v1 resource model, not FHIR resources.
+  conforms: partial
+  evidence: >-
+    The REST resource model (/qapi/v1/patients, /appointments, /episodes) is
+    proprietary, not FHIR. But the intake:completed webhook payload IS a
+    FHIR-shaped resource: a DiagnosticReport with status, subject.identifier
+    (system SPID), encounter.identifier (system SAID), issued, and contained[]
+    Observation resources carrying code.text and valueString. The documentation
+    never uses the word FHIR and names no version or profile, so this is FHIR
+    resource shape without a FHIR conformance claim, capability statement or
+    /metadata endpoint.
 - id: rfc9457-problem-details
   conforms: false
-  evidence: 'Errors use a plain {"message": ...} JSON envelope, not application/problem+json.'
+  evidence: >-
+    Errors use plain JSON — {"message": ...} on older operations and
+    {"error": {"message": ...}} on newer ones — never application/problem+json.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: >-
+    A responsible disclosure policy is published as a web page, but no
+    /.well-known/security.txt is served on any host (404 on demo.visitnow.org,
+    301-to-soft-404 on www.teladochealth.com).
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No deprecation or sunset policy or header is documented.
 - id: webhooks
   conforms: true
-  evidence: Event subscription surface at /qapi/v1/webhooks with 13 event types.
+  evidence: >-
+    Event subscription surface at /qapi/v1/webhooks with 13 event types across
+    patient, appointment, episode and intake lifecycles, with per-subscription
+    encryption keys.
+compliance_documents:
+- name: HIPAA Notice of Privacy Practices
+  url: https://www.teladochealth.com/legal/notice-of-privacy-practices
+  status: 200
+- name: Consumer Health Data Privacy Policy
+  url: https://www.teladochealth.com/legal/consumer-health-privacy
+- name: Transparency Reporting
+  url: https://www.teladochealth.com/legal/transparency-reporting
+  status: 200
+- name: Responsible Disclosure Policy
+  url: https://www.teladochealth.com/legal/responsible-disclosure
+  status: 200
+- name: Compliance and Ethics Hotline (EthicsPoint)
+  url: https://secure.ethicspoint.com/domain/media/en/gui/55037/index.html

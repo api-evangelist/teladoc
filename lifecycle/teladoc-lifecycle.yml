@@ -1,22 +1,70 @@
-generated: '2026-07-21'
-method: derived
-source: https://intouchhealth.github.io/solo-slate/
+generated: '2026-08-15'
+method: searched
+source: >-
+  https://intouchhealth.github.io/solo-slate/ + live probes of
+  status.teladochealth.com and api-documentation.teladochealth.com (2026-08-15)
 api: Teladoc Health Solo External API
 versioning:
   scheme: uri-path
   current: v1
   path_prefix: /qapi/v1
   docs: https://intouchhealth.github.io/solo-slate/
+  release_train:
+    style: quarterly
+    format: YYYYQn.n
+    latest_observed: 2026Q1.4
+    environments:
+    - CAT
+    - PROD
+    see: changelog/teladoc-changelog.yml
+    notes: >-
+      Changes ship additively inside v1 on a quarterly release train, stamped
+      per-operation in the reference (CAT date then PROD date). There is no
+      version negotiation header and no dated version selector.
+change_communication:
+  changelog_page: null
+  release_notes_feed: null
+  see: changelog/teladoc-changelog.yml
+  notes: >-
+    Change is communicated only as inline "Release version" stamps on the
+    operations that changed. There is nothing to subscribe to and no way to diff
+    two releases.
 deprecation:
   policy_url: null
   sunset_header: false
-  notes: No public deprecation/sunset policy is documented for the Solo External API.
+  rfc8594: false
+  notes: >-
+    No public deprecation/sunset policy is documented for the Solo External API,
+    and no Deprecation or Sunset response header is described. One in-payload
+    field is marked deprecated (familyMember on the patient object) with no
+    removal date attached.
+  deprecated_fields:
+  - object: patient
+    field: familyMember
+    replacement: isLinkedByEmail / sharedEmailGroup
+    removal_date: null
 sla:
   url: null
-status_page: null
+status_page:
+  url: null
+  probed: '2026-08-15'
+  evidence:
+  - url: https://status.teladochealth.com
+    status: 000
+    note: No DNS / no response — no status page exists at the conventional host.
+developer_portal_health:
+  url: https://api-documentation.teladochealth.com/
+  status: 403
+  body: 'error code: 1014'
+  note: >-
+    The Developer Hub linked from apis.yml is returning a Cloudflare 1014
+    (CNAME cross-user banned) error. This is a broken host, not an auth gate —
+    the front door to the SDK documentation is currently unreachable to anyone.
+  probed: '2026-08-15'
 deprecated_operations: []
 notes: >-
-  No public status page, changelog, or deprecation policy was found for the Solo
-  External API. Access is partner-gated (BAA required), so lifecycle
-  communications are handled through the partner relationship rather than a
-  public surface.
+  No public status page, no SLA, no subscribable changelog and no deprecation
+  policy. Access is partner-gated (BAA required), so lifecycle communication runs
+  through the partner relationship rather than a public surface — which means an
+  integrator evaluating the API has no way to see whether it is actively
+  maintained beyond the two release stamps left inside the reference.

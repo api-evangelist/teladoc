@@ -1,8 +1,34 @@
-generated: '2026-07-21'
+generated: '2026-08-15'
 method: searched
-source: https://intouchhealth.github.io/solo-slate/
+source: >-
+  https://intouchhealth.github.io/solo-slate/ + live probe of
+  https://demo.visitnow.org/qapi/v1/waiting-rooms (2026-08-15)
 api: Teladoc Health Solo External API
 format: json-message-envelope
+envelopes:
+- id: flat-message
+  shape: json-object
+  fields:
+  - name: message
+    description: Human-readable description of the error condition.
+  example: '{"message": "Missing Required Parameters"}'
+  used_by: The older operations documented in the Slate reference (patients, appointments,
+    attachments, reports).
+- id: nested-error
+  shape: json-object
+  fields:
+  - name: error.message
+    description: Human-readable description of the error condition, nested under an
+      error object.
+  example: '{"error": {"message": "Bad parameters [locationId: This is not a valid UUID.]"}}'
+  used_by: >-
+    The newer surface — POST /qapi/v1/perfect-answer documents 400 and 422 in
+    this shape, and it is what the live edge returns.
+  observed_live:
+    url: https://demo.visitnow.org/qapi/v1/waiting-rooms
+    status: 401
+    body: '{"error":{"message":""}}'
+    probed: '2026-08-15'
 envelope:
   shape: json-object
   fields:
@@ -10,14 +36,25 @@ envelope:
     description: Human-readable description of the error condition.
   example: '{"message": "Missing Required Parameters"}'
 notes: >-
-  The Solo External API does not use RFC 9457 application/problem+json. Errors
-  are returned as a plain JSON object carrying a human-readable message field,
-  with the failure signalled by the HTTP status code.
+  The Solo External API does not use RFC 9457 application/problem+json. There is
+  no error code vocabulary at all — no machine-readable code, type or field
+  pointer — only an HTTP status plus a human string, and the API ships TWO
+  incompatible envelopes for that string: a flat {"message": ...} in the older
+  documented operations and a nested {"error": {"message": ...}} on the newer
+  Perfect Answer surface. An unauthenticated live probe returned the nested form
+  with an EMPTY message, so a client cannot rely on the string being populated
+  either. Any agent or SDK must handle both shapes and branch on status code.
 problems:
 - status: 400
   title: Bad Request
   meaning: Missing or malformed required parameters in the request.
   example_message: Missing Required Parameters
+  alt_example: 'Bad parameters [locationId: This is not a valid UUID.]'
+- status: 401
+  title: Unauthorized
+  meaning: No Api-Key header, or an unrecognised key.
+  observed: '{"error":{"message":""}}'
+  note: Observed live; not documented in the Slate reference.
 - status: 403
   title: Forbidden
   meaning: Authentication missing/invalid or the API key lacks access to the resource.
@@ -28,6 +65,18 @@ problems:
 - status: 422
   title: Unprocessable Entity
   meaning: The request was well-formed but failed validation of its contents.
+  example_message: A visit has already been created for the patient within 24 hours
+  note: >-
+    Documented on POST /qapi/v1/perfect-answer as "Rejected request" — a
+    business-rule rejection, not a schema failure, carried in the same envelope
+    as a validation error with nothing to distinguish them programmatically.
 success_codes:
 - 200
 - 201
+tracing:
+  header: x-correlation-id
+  observed: '2026-08-15'
+  note: >-
+    Every response carries an x-correlation-id UUID; it is the only value an
+    integrator can quote to support when reporting a failure. It is not
+    documented in the API reference.

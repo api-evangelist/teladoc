@@ -1,0 +1,31 @@
+generated: '2026-08-15'
+method: searched
+source: https://www.teladochealth.com/ (sitemap sweep) + https://intouchhealth.github.io/solo-slate/
+api: Teladoc Health Solo External API
+plan_count: 0
+plans: []
+model: enterprise-contract
+notes: >-
+  Teladoc Health publishes no developer plans, tiers, quotas or list prices for
+  the Solo External API. There is no /pricing page on teladochealth.com (the
+  path 200s onto the site's /errors/404 page) and no pricing URL appears
+  anywhere in the 2,117-URL sitemap. API and Mobile SDK access is granted under
+  a partner agreement and a Business Associate Agreement (BAA); commercial terms
+  for the Solo virtual care platform are negotiated per health system / employer
+  contract through sales, not self-serve. Consumer-side prices exist for
+  Teladoc's own care services (a per-visit or per-member benefit price), but
+  those are the price of clinical care, not of API access, and are not recorded
+  here.
+contact_sales:
+  url: https://www.teladochealth.com/contact
+  status: 200
+evidence:
+- url: https://www.teladochealth.com/pricing
+  status: 200
+  note: Soft 404 — redirects to https://www.teladochealth.com/errors/404.
+- url: https://www.teladochealth.com/sitemap.xml
+  status: 200
+  note: 2,117 URLs; no pricing/plans page for the developer platform.
+- url: https://intouchhealth.github.io/solo-slate/
+  status: 200
+  note: API reference documents no plans, quotas or billing surface.

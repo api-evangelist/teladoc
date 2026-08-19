@@ -1,0 +1,69 @@
+generated: '2026-08-15'
+method: searched
+source: https://intouchhealth.github.io/solo-slate/
+api: Teladoc Health Solo External API
+dedicated_changelog:
+  published: false
+  url: null
+  notes: >-
+    Teladoc Health publishes no dedicated changelog, release-notes feed or
+    versioning page for the Solo External API. What exists instead are inline
+    release stamps inside the Slate API reference: individual operations carry a
+    "Release version" plus the dates the change reached the CAT (customer
+    acceptance testing) and PROD environments. Only the operations changed in a
+    given release carry a stamp, so this is a partial record of change, not a
+    complete history — there is no way for an integrator to subscribe to it or
+    to diff two releases.
+scheme:
+  style: quarterly-release-train
+  format: YYYYQn.n
+  example: 2026Q1.4
+  environments:
+  - name: CAT
+    role: customer acceptance testing; a release lands here first
+  - name: PROD
+    role: production; typically 3-5 days after CAT
+  api_version: v1
+  api_version_note: >-
+    The URI version (/qapi/v1) has not moved; release trains ship additively
+    inside v1.
+entries:
+- version: 2026Q1.4
+  date_cat: '2026-03-06'
+  date_prod: '2026-03-11'
+  breaking: false
+  additions:
+  - POST /qapi/v1/perfect-answer — Perfect Answer integration endpoint that creates
+    or updates patient demographics, creates the appointment, attaches the PCM
+    template to it and writes the request answers into that template.
+  highlights: >-
+    Requires waiting-room configuration (Acute Neurology - Physician Services and
+    EEG - Physician Services templates), an EHR Mapping location with a
+    Geolocation Id, and a PCM template with tagged answers.
+  source: https://intouchhealth.github.io/solo-slate/
+- version: 2022Q4.4
+  date_cat: '2022-11-25'
+  date_prod: '2022-11-29'
+  breaking: false
+  additions:
+  - GET /qapi/v1/appointments/id/type/SAID/value/{solo_appointment_id}/video-call-links
+    — retrieve provider and patient video-call links for an appointment addressed
+    by its Solo Appointment ID (SAID).
+  highlights: >-
+    Extended the SAID addressing convention to the video-call-links surface,
+    alongside the existing external-appointment-id form.
+  source: https://intouchhealth.github.io/solo-slate/
+undated_changes:
+  notes: >-
+    Later additions appear in the reference without a release stamp — the
+    intake:completed webhook event (its example payload is dated 2025-09-12 and
+    carries a FHIR-shaped DiagnosticReport body) and the virtual nursing /
+    request-assistance surface are both documented with no version or date.
+evidence:
+- url: https://intouchhealth.github.io/solo-slate/
+  status: 200
+- url: https://api-documentation.teladochealth.com/
+  status: 403
+  note: >-
+    The developer hub named in apis.yml is down — Cloudflare "error code: 1014"
+    (CNAME cross-user banned), not an auth wall.

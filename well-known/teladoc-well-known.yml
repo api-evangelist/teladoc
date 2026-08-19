@@ -1,27 +1,83 @@
-generated: '2026-07-21'
+generated: '2026-08-15'
 method: probed
-source: live probes of teladoc.com / teladochealth.com / demo.visitnow.org
+source: live probes of www.teladochealth.com and demo.visitnow.org (2026-08-15)
 notes: >-
-  No real /.well-known/ discovery documents are published. teladoc.com and
-  teladochealth.com return HTTP 200 for every /.well-known/ path but serve the
-  site's generic "Page Not Found" HTML (soft 404, meta robots noindex), not a
-  discovery document. demo.visitnow.org returns a genuine 404. No security.txt,
-  openid-configuration, oauth-authorization-server, api-catalog, or ai-plugin.json
-  exists.
+  No /.well-known/ discovery document is published on any Teladoc Health host.
+  Two distinct false-positive shapes were ruled out. (1) www.teladochealth.com
+  301s every /.well-known/* path; following the redirect lands on the site's
+  generic "Page Not Found" HTML served with HTTP 200 (a soft 404, meta robots
+  noindex) — a 200 that is not a document. (2) demo.visitnow.org answers 200 with
+  an identical 2,910-byte InTouch Health single-page-app shell for any
+  extensionless path, including /.well-known/openid-configuration and
+  /.well-known/oauth-authorization-server; paths ending in .json or .txt return a
+  genuine 404. Nothing here is a discovery document, so NO WellKnown or
+  SecurityTxt pointer is emitted for this provider. Recorded absence, not
+  presence.
 hosts:
 - host: https://www.teladochealth.com
   documents:
   - path: /.well-known/security.txt
-    status: soft-404
+    status: 301
+    resolves_to: soft-404 HTML (HTTP 200 at /errors/404)
   - path: /.well-known/openid-configuration
-    status: soft-404
+    status: 301
+    resolves_to: soft-404 HTML
   - path: /.well-known/oauth-authorization-server
-    status: soft-404
+    status: 301
+    resolves_to: soft-404 HTML
+  - path: /.well-known/oauth-protected-resource
+    status: 301
+    resolves_to: soft-404 HTML
   - path: /.well-known/api-catalog
-    status: soft-404
+    status: 301
+    resolves_to: soft-404 HTML
   - path: /.well-known/ai-plugin.json
-    status: soft-404
+    status: 301
+    resolves_to: soft-404 HTML
+  - path: /.well-known/agent-card.json
+    status: 301
+    resolves_to: soft-404 HTML
+  - path: /.well-known/agent.json
+    status: 301
+    resolves_to: soft-404 HTML
+  - path: /llms.txt
+    status: 301
+    resolves_to: soft-404 HTML
 - host: https://demo.visitnow.org
   documents:
   - path: /.well-known/security.txt
     status: 404
+  - path: /.well-known/openid-configuration
+    status: 200
+    content_type: text/html
+    verdict: spa-shell
+    note: 2,910-byte InTouch Health SPA catch-all, not a document.
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: text/html
+    verdict: spa-shell
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    content_type: text/html
+    verdict: spa-shell
+  - path: /.well-known/api-catalog
+    status: 200
+    content_type: text/html
+    verdict: spa-shell
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+  - path: /api-docs
+    status: 200
+    content_type: text/html
+    verdict: spa-shell
+    note: Probed as a spec candidate; returns the same SPA shell, not Swagger UI.
+summary:
+  real_documents: 0
+  pointer_emitted: false
+  agent_card_found: false

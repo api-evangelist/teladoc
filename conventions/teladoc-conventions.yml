@@ -1,7 +1,17 @@
-generated: '2026-07-21'
+generated: '2026-08-15'
 method: searched
-source: https://intouchhealth.github.io/solo-slate/
+source: >-
+  https://intouchhealth.github.io/solo-slate/ + live response headers from
+  https://demo.visitnow.org/qapi/v1/waiting-rooms (2026-08-15)
 api: Teladoc Health Solo External API
+base_url:
+  documented: https://demo.visitnow.org
+  production: tenant-specific, unpublished
+  notes: >-
+    Every example in the reference uses the demo host. Solo is deployed per
+    customer under visitnow.org, and no production host name is published, so an
+    integrator receives their base URL through the partner agreement rather than
+    from the documentation.
 authentication:
   style: api-key-header
   header: Api-Key
@@ -57,6 +67,34 @@ pagination:
     date-range filters instead.
 rate_limiting:
   documented: false
+  observed_headers: []
+  see: rate-limits/teladoc-rate-limits.yml
+  notes: >-
+    No published limits and no rate-limit headers on a live response — see the
+    rate-limits artifact for the probe.
+request_tracing:
+  header: x-correlation-id
+  direction: response
+  format: uuid
+  documented: false
+  method: probed
+  probed: '2026-08-15'
+  notes: >-
+    Every response from the Solo API carries an x-correlation-id UUID (observed
+    on a live 401). It is the only correlation handle available for support, and
+    the API reference never mentions it. No client-supplied request-id header is
+    documented.
+transport_security:
+  hsts: true
+  hsts_max_age: 15552000
+  hsts_includesubdomains: true
+  hsts_preload: true
+  tls: TLSv1.3
+  edge: cloudflare
+  probed: '2026-08-15'
+release_train:
+  scheme: quarterly (YYYYQn.n), CAT then PROD
+  see: changelog/teladoc-changelog.yml
 cross_links:
   authentication: authentication/teladoc-authentication.yml
   errors: errors/teladoc-problem-types.yml

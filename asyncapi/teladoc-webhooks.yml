@@ -44,3 +44,35 @@ events:
   category: episode
 - name: intake:completed
   category: intake
+  subscription_note: >-
+    Subscribing to intake:completed additionally requires an intakeQuestionIds[]
+    array on the webhook registration body, selecting which intake questions are
+    delivered.
+  payload_shape: fhir-diagnostic-report
+  payload_note: >-
+    Unlike every other event — which delivers a minimal {"event": ..., "data":
+    {"patientId"|"appointmentId": int}} envelope — intake:completed delivers a
+    FHIR-shaped resource: a DiagnosticReport with status, subject.identifier
+    (system "SPID"), encounter.identifier (system "SAID"), issued, and a
+    contained[] array of Observation resources, each carrying an id (the
+    question id), code.text (the question) and valueString (the answer). The
+    documentation never uses the word FHIR and names no version or profile.
+payload_envelopes:
+- scope: patient events
+  example: '{"event": {"type": "string"}, "data": {"patientId": {"type": "int"}}}'
+- scope: appointment events
+  example: '{"event": {"type": "string"}, "data": {"appointmentId": {"type": "int"}}}'
+- scope: intake:completed
+  example: FHIR DiagnosticReport with contained Observation resources (see payload_note).
+registration_body:
+  endpoint: string — the subscriber callback URL
+  events: array of event names
+  intakeQuestionIds: array — only when intake:completed is subscribed
+delivery:
+  retries: undocumented
+  signature_header: none
+  note: >-
+    No delivery-retry policy, no HMAC signature header and no replay endpoint are
+    documented; authenticity rests entirely on the AES-256-CBC payload
+    encryption key returned at subscription time.
+last_verified: '2026-08-15'

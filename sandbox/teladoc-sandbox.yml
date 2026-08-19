@@ -1,4 +1,4 @@
-generated: '2026-07-21'
+generated: '2026-08-15'
 method: searched
 source: https://intouchhealth.github.io/solo-slate/
 api: Teladoc Health Solo External API
@@ -9,6 +9,30 @@ environments:
     Published demo/test environment used throughout the Solo External API
     reference. Video call links are issued under https://demo.visitnow.org/videocalls/.
   auth: Api-Key header (demo tenant key issued by Teladoc Health)
+  reachable: true
+  probe:
+    url: https://demo.visitnow.org/qapi/v1/waiting-rooms
+    status: 401
+    body: '{"error":{"message":""}}'
+    checked: '2026-08-15'
+    note: >-
+      The host is live and the API answers unauthenticated requests with 401, so
+      the demo environment exists — but no self-serve key can be obtained, so it
+      is a gated sandbox, not a try-it-now one.
+- name: CAT
+  base_url: null
+  purpose: >-
+    Customer Acceptance Testing. Named in the release stamps inside the API
+    reference ("Release to CAT for March 6th 2026", "Available on CAT from
+    November 25, 2022") — each release lands on CAT roughly 3-5 days before PROD.
+    Its host name is never published; partners reach it through their own tenant.
+  auth: Api-Key header (tenant key issued by Teladoc Health)
+- name: PROD
+  base_url: null
+  purpose: >-
+    Production. The reference publishes no production host — every example uses
+    demo.visitnow.org — so the production base URL is tenant-specific and only
+    disclosed under the partner agreement.
 test_values:
   documented: false
   notes: >-
