@@ -12,15 +12,19 @@ deliveryModel:
   method: derived
 accessModel:
   pricing: unknown
-  onboarding: self-serve
+  onboarding: approval
   trial: false
   try_now: false
   public: false
-  label: Self-serve signup
+  label: Requires approval
   confidence: medium
   source:
+  - plans
   - authentication
-  generated: '2026-07-22'
+  - rate-limits
+  - security
+  - sandbox
+  generated: '2026-09-03'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/teladoc.png
 name: Teladoc
