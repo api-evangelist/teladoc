@@ -107,6 +107,26 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: LinkedIn
+  url: https://www.linkedin.com/company/teladoc-health
+- type: ForOrganizations
+  url: https://www.teladochealth.com/organizations
+- type: ForIndividuals
+  url: https://www.teladochealth.com/individuals
+- type: ForClinicians
+  url: https://www.teladochealth.com/clinicians
+- type: Solutions
+  url: https://www.teladochealth.com/organizations/solutions
+- type: News
+  url: https://www.teladochealth.com/newsroom
+- type: Careers
+  url: https://www.teladochealth.com/careers
+- type: InvestorRelations
+  url: https://ir.teladochealth.com
+- type: TrustCenter
+  url: https://www.teladochealth.com/security-privacy
+- type: Contact
+  url: https://www.teladochealth.com/contact
 - type: Website
   url: https://www.teladochealth.com
 - type: DeveloperPortal
